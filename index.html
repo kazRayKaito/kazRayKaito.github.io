@@ -4,12 +4,12 @@
 <head>
 	<meta charset = "UTF-8">
 	<meta name = "viewport" content = "width = device-width, initial-scale = 1">
-	<title>Ray Kaito</title>
+	<title>Kazuki Kaito</title>
 	<link rel = "stylesheet" type = "text/css" href = "lib/css/rayStyle.css"/>
 	<link rel = "icon" type = "image/x-icon" href = "img/0_common/hp_icon.png"/>
 </head>
 
-<body>
+<body id = "body">
 	<div class = "topnaviContainer">
 		<div class = "topnavi" id ="rayTopnavi" onclick="clickOnTopnavi(event.target.id)">
 			<a id = "navi_top" class = "active">Top</a>
@@ -20,18 +20,18 @@
 		</div>
 	</div>
 	
-	<div class = "contentsContainer">
+	<div class = "contentsContainer" id = "contentsContainer">
 		<div class = "mainContent" id = "mainContent">
 			<div id = "top" class = "showContent" style="display: none;">
 				<div class="frame">
 					<div class = "header">
-						<h1>Welcome to Ray's site</h1>
+						<h1>Welcome to my site</h1>
 					</div>
 
 					<p>
-						ようこそ、冷解凍のホームページへ。<br>
-						JavaScriptのプロジェクトや、旅行先で撮影した写真を公開しています。<br>
-						詳細はProjectタブを開いてください。<br>
+						ようこそ、Kazuki Kaitoのホームページへ。<br>
+						JavaScriptで作成したプログラムや、旅行先で撮影した写真を公開しています。<br>
+						詳細は各タブを開いてください。<br>
 
 					</p>
 				</div>
@@ -40,37 +40,26 @@
 			<div id = "about" class = "hideContent" style="display: none;">
 				<div class="frame">
 					<div class = "header">
-						<h1>About Ray </h1>
+						<h1>About Kazuki Kaito</h1>
 					</div>
 					<h2>概要:</h2>
 					<p>
-						身長175cm、体重65kg、好物はハンバーガー。
+						身長175cm、体重70kg、好物はカンパチ。
 						趣味はプログラミングで、特にJavaScriptとPythonをいじることが多い。
-						いま一番学びたいのはPythonを用いたビッグデータ解析と機械学習。
-						でも環境構築とかテーマ選定とかめんどくさいから自分のHPを製作中。
+						いま学びたいのはPythonを用いたビッグデータ解析と機械学習だが、
+						テーマ選定で苦戦中。
 					</p>
 					<h2>来歴:</h2>
 					<p>
-						1996年のある日、佐賀県の病院で生まれた。雪が降る寒い朝だった。
-						親が転勤族だったこともあり、生後3ヶ月でパスポートを取得し、ブラジルへ引っ越す。
-						その後5年間ブラジル各地を転々とし、日本へ帰国。したかと思えばすぐにタイへ。
-						1年半ほど日本人学校に通った後に再び帰国、6年ほど日本での生活を満喫する。
-						が、中学1年が終わるころにアメリカの僻地に飛ばされる。
-						誕生時の寒さも吹き飛ぶような極寒の地で毎日雪かきに明け暮れた。
-						中学生らしく「こんなに降ってるなら休校でいいじゃん」と思ってた。
-						ある朝に先生が雪で滑り骨折した。
-						それ以降は少しでも雪が降ると休校になった。
-						中学生ながら「大人の思考回路も単純だな」と思った。
-					</p>
-					<h2>学歴:</h2>
-					<p>
-						知識の9割は中学受験で学んだ内容である。
-						地球の自転軸の傾きが何度とか、衆議院議員は何人とか、人として扱われる最低限度の知識を身に着ける。
-						高校で先輩とロボコン部を創設し、最後の年には23位(4000チーム中)に入ることが出来た。その時先輩はいなかったが...
-						上記の経験から工学部を目指すようになり、とある州立大学で機械工学を専攻する。
-						祖国での生活を夢見て大学卒業後に日本の工業大学に入学する。
-						濡れ性の違いによるフィンガリング現象がチカン効率に与える影響をポアネットワークを用いて考察した。
-						卒業後は中部の会社に入社した。
+						1996年、佐賀県の病院で生まれる。雪が降る寒い朝だった。
+						親は転勤族だった。
+						生後3ヶ月でパスポートを取得し、ブラジルへ引っ越す。
+						5年間ブラジル各地を転々とし、日本へ帰国。半年後、タイへ引っ越す。
+						1年半ほど日本人学校に通い日本に帰国、約6年間を関東で過ごす。
+						中学1年が終わるころに、アメリカのアイオワ州に引っ越す。
+						冬になると氷点下30度を下回り、雪が降ると通学前に雪かきをしていた。
+						高校卒業までの5年間をアイオワで過ごした。
+
 					</p>
 				</div>
 			</div>
@@ -93,7 +82,7 @@
 						</tr>
 
 						<tr><td colspan="2"><hr></td></tr>
-						
+
 						<tr>
 							<td width="25%">
 								<a href="projects/31_random_walker/index.html"><img src="projects/31_random_walker/thumbnail.png" style="width:80%;" title="31_random_walker" alt="thumbnail"></a>
@@ -298,6 +287,7 @@
 						</tr>
 
 						<tr><td colspan="2"><hr></td></tr>
+					
 
 					</table>
 				</div>
@@ -310,9 +300,7 @@
 					</div>
 
 					<p>
-						ようこそ、カイトウのホームページへ。このサイトは私が趣味で個人的に作ったものであり、とくに社会に貢献することもなければ、誰かの役に立つ情報を含んでいるわけでもありません。
-						ようこそ、カイトウのホームページへ。このサイトは私が趣味で個人的に作ったものであり、とくに社会に貢献することもなければ、誰かの役に立つ情報を含んでいるわけでもありません。
-						ようこそ、カイトウのホームページへ。このサイトは私が趣味で個人的に作ったものであり、とくに社会に貢献することもなければ、誰かの役に立つ情報を含んでいるわけでもありません。
+						旅先での写真を載せる予定。
 					</p>
 				</div>
 			</div>
@@ -339,6 +327,7 @@
 
 	<script src="lib/js/rayScript_css_controller.js"></script>
 	<script type="text/javascript">
+		initCSSController();
 		clickOnTopnavi("navi_top");
 	</script>
 </body>

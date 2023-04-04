@@ -1,6 +1,6 @@
 /* ---------------General--------------- */
 body {
-	font-family: "游明朝";
+	font-family: "Yu Mincho", "YuMincho", serif;
 	margin: auto;
 }
 
@@ -29,7 +29,6 @@ p {
 }
 .topnavi {
 	overflow: hidden;
-	margin:  auto;
 	max-width: 800px;
 }
 
@@ -96,11 +95,10 @@ p {
 	margin: 5px;
 	border-radius: 15px 15px 15px 15px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-	padding-bottom: 5px;
+	padding: 5px;
 }
 
 .contentsContainer{
-	margin:  auto;
 	max-width: 800px;
 }
 .mainContent{
