@@ -321,7 +321,7 @@ class houghTransform extends ImageData{
                 }
             }
         }
-        plotA.update(this.intensity,this.rangeTheta);
+        //plotA.update(this.intensity,this.rangeTheta);
     }
     updateIntensity(x,y,value){
         if(value==0) return;
