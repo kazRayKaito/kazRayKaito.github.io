@@ -29,7 +29,7 @@ class TVListManager{
     loadTVPrograms(txt){
         const arr = txt.split('\n');
         for(let i = 1; i < arr.length; i++){
-            const tvProgramTemp = arr[i].split('\t');
+            const tvProgramTemp = arr[i].split(',');
             if(tvProgramTemp==""){
               break;
             }
