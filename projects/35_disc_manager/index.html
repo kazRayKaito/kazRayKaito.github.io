@@ -3,7 +3,7 @@
 <html>
 
 <head>
-	<title>Disc Search</title>
+	<title>Disc Manager</title>
 	<link rel="stylesheet" href="../rayStyle.css" type="text/css">
 	<link rel="icon" type="image/png" href="../icon.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"/>
@@ -15,7 +15,7 @@
 	<table id="Table" border="0" align="center">
 		<tr>
 			<td align="left" onclick="discScanner.switchScannerOnOff()">
-		        <a id="textScannerStatus">Camera ON/OFF</a>
+		        <a id="textScannerStatus">ERROR</a>
 		        <video  id="cameraMedia" controls autoplay playsinline opacity="0"  width="1" height="1" style="display:none;"></video>
 			</td>
 			<td align="right">
@@ -57,7 +57,7 @@
 	<script type="text/javascript" src="vision_program.js"></script>
 	<script type="text/javascript" src="scanner.js"></script>
 	<script type="text/javascript" src="load_tv_programs.js"></script>
-	<script type="text/javascript" src="../00_JavaScripts/opacityController.js"></script>
+	<script type="text/javascript" src="opacityController.js"></script>
 	<script type="text/javascript">
 	<!--
 		//Opacity Control
@@ -91,23 +91,26 @@
 
 		//Prepare scanner
 		const discScanner = new DiscScanner(document.getElementById("cameraMedia"),displayCanvas);
-
-		//Usefull plots and graphs
-		const plotA = new PlotCanvas();
-		const plotB = new PlotCanvas();
-		const plotC = new PlotCanvas();
-		const graphA = new GraphCanvas();
-		const graphB = new GraphCanvas();
-		const graphC = new GraphCanvas();
-		if(false){
-			plotA.appendSelf();
-			plotB.appendSelf();
-			plotC.appendSelf();
-			graphA.appendSelf();
-			graphB.appendSelf();
-			graphC.appendSelf();
-		}
+		
 		tvManager.loadRemoteTxt("TV_Program_List.txt");
+
+		const getParams=()=>{
+			const idx = document.URL.indexOf('?');
+			let params = new Array();
+			if(idx != -1){
+				let pairs = document.URL.substring(idx+1, document.URL.length).split('&');
+				for(let i=0; i<pairs.length;i++){
+					nameVal = pairs[i].split('=');
+					params[nameVal[0]] = nameVal[1];
+				}
+			}
+			return params;
+		}
+
+		const params = getParams();
+		if(Object.keys(params).length==2){
+			discScanner.addDiscNumber(params["discNum"]);
+		};
 
 	//--> 
 	</script>

@@ -1,0 +1,172 @@
+/* ---------------General--------------- */
+body {
+	font-family: "Yu Mincho", "YuMincho", serif;
+	margin: auto;
+}
+
+h1 {
+	margin: 5pt;
+	font-size: 1.75em;
+}
+
+h2 {
+	margin: 5pt;
+	font-size: 1.25em;
+}
+
+p {
+	margin: 5pt;
+	text-align: justify;
+}
+
+/* ---------------General--------------- */
+
+/* ---------------TopNavi--------------- */
+.topnaviContainer{
+	user-select: none;
+	background-color: #101010;
+	cursor: pointer;
+}
+.topnavi {
+	overflow: hidden;
+	max-width: 800px;
+}
+
+.topnavi a{
+	float: left;
+	display: block;
+	color: #f2f2f2;
+	text-align: center;
+	font-size: 17px;
+	text-decoration: none;
+	padding: 12px 16px;
+	height: 20px;
+}
+
+.topnavi a:hover{
+	text-shadow: 0pt 0pt 5pt white, 0pt 0pt 5pt white;
+}
+
+.topnavi a.active{
+	background-color: #707070;
+}
+
+.topnavi .icon {
+	display: none;
+}
+
+@media screen and (max-width: 600px){
+	.topnavi a{
+		text-align: center;
+		display: block;
+		float: none;
+	}
+	.topnavi a.icon{
+		position: absolute;
+		display: block;
+		float: left;
+		left: 0;
+		top: 0;
+	}
+	.topnavi a:not(:first-child, :last-child){
+		visibility: hidden;
+		height: 0px;
+		padding: 0;
+		opacity: 0;
+		transition-duration: 0.5s;
+	}
+	.topnavi.showNavi a{
+		visibility: visible;
+		height: 20px;
+		padding: 12px 16px;
+		opacity: 1;
+	}
+	.topnavi:not(.showNavi) a.active{
+		background-color: #101010;
+	}
+	.topnavi.showNavi a.active{
+		background-color: #707070;
+	}
+}
+/* ---------------TopNavi--------------- */
+
+/* ---------------MainPage--------------- */
+.frame{
+	margin: 5px;
+	border-radius: 15px 15px 15px 15px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	padding: 5px;
+}
+
+.contentsContainer{
+	max-width: 800px;
+}
+.mainContent{
+	float: left;
+	width:  70%;
+}
+.sideContent{
+	float: right;
+	width: 30%;
+	font-size: 12px;
+}
+
+@keyframes fadeIn{
+	0% {
+		color:  transparent;
+		text-shadow: unset;
+		opacity: 0;
+	}
+	1% {
+		color:  transparent;
+		text-shadow: 0 0 10px black;
+	}
+	99%{
+		color:  transparent;
+		text-shadow: 0 0 0px black;
+	}
+	100%{
+		color:  black;
+		text-shadow: unset;
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut{
+	0% {
+		color:  black;
+		text-shadow: unset;
+		opacity: 1;
+	}
+	1% {
+		color:  transparent;
+		text-shadow: 0 0 0px black;
+	}
+	99%{
+		color:  transparent;
+		text-shadow: 0 0 20px black;
+	}
+	100%{
+		color:  transparent;
+		text-shadow: unset;
+		opacity: 0;
+	}
+}
+.hideContent{
+	animation: fadeOut 0.5s normal forwards;
+}
+.showContent{
+	animation: fadeIn 0.5s normal forwards;
+}
+
+@media screen and (max-width: 600px){
+	.mainContent{
+		float: center;
+		width:  100%;
+	}
+	.sideContent{
+		float: center;
+		width: 100%;
+	}
+}
+/* ---------------MainPage--------------- */

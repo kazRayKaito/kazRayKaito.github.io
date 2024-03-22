@@ -65,7 +65,8 @@ class TVListManager{
         const title = row.cells[0].innerText;
         const discNumber = Number(row.cells[1].innerText);
         alert("[ "+title+" ] ディスクの番号は "+discNumber+" です")
-        discScanner.addDiscNumber(discNumber);
+        //discScanner.addDiscNumber(discNumber);
+		window.location.href = "https://kazraykaito.github.io/projects/35_disc_manager/index.html?discNum="+discNumber+"&searchStr="+"BLANK";
     }
     updateSearchResult(tvManager){
         const tv = tvManager;
