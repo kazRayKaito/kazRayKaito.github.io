@@ -92,6 +92,22 @@
 		//Prepare scanner
 		const discScanner = new DiscScanner(document.getElementById("cameraMedia"),displayCanvas);
 		
+		//Usefull plots and graphs
+		const plotA = new PlotCanvas();
+		const plotB = new PlotCanvas();
+		const plotC = new PlotCanvas();
+		const graphA = new GraphCanvas();
+		const graphB = new GraphCanvas();
+		const graphC = new GraphCanvas();
+		if(true){
+			plotA.appendSelf();
+			plotB.appendSelf();
+			plotC.appendSelf();
+			graphA.appendSelf();
+			graphB.appendSelf();
+			graphC.appendSelf();
+		}
+		
 		tvManager.loadRemoteTxt("TV_Program_List.txt");
 
 		const getParams=()=>{
