@@ -100,7 +100,7 @@ class Hexamond{
             "yellow",
             "green",
             "purple",
-            "fuchsia",
+            "goldenrod",
             "gray",
             "magenta",
             "pink",
