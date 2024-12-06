@@ -16,11 +16,11 @@ class Hexamond{
         //Draw to test
         this.canvas.fillAll("white");
         this.canvas.strokeColor("black");
-        this.canvas.lineWidth(2);
+        this.canvas.lineWidth(1);
         this.canvas.drawRect();
 
         this.canvas.strokeColor("black");
-        this.canvas.lineWidth(3);
+        this.canvas.lineWidth(2);
         this.canvas.drawFrame();
     }
     xyz2i(x,y,z){
@@ -252,7 +252,7 @@ class Hexamond{
             shapeFillXYZList[shapeFillXYZList.length] = this.i2xyz(index);
         });
         shapeFillXYZList.forEach(xyz=>{
-            this.canvas.drawTriInner(...xyz, this.colors[shapeCount], 6);
+            this.canvas.drawTriInner(...xyz, this.colors[shapeCount]);
             this.tiles[this.xyz2i(...xyz)] = shapeIndex;
             this.shapes[shapeIndex][1] = 0;
         });

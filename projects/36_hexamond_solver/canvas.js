@@ -160,9 +160,9 @@ class HexaCanvas extends Canvas{
         const yp = this.canvas.height/2 + this.cellLength/4 + (xi-4)*this.cellLength/2 - (yi-3) * this.cellLength;
         return [xp, yp];
     }
-    drawTriInner(xi,yi,zi, color = "black", lineWidth=1){
+    drawTriInner(xi,yi,zi, color = "black"){
         this.strokeColor(color);
-        this.lineWidth(lineWidth);
+        this.lineWidth(this.cellLength*0.1);//*this.pixelRatio);
 
         let x1 = xi;
         let y1 = yi;
@@ -175,7 +175,7 @@ class HexaCanvas extends Canvas{
         [x2,y2]=this.i2p(x2,y2);
         [x3,y3]=this.i2p(x3,y3);
 
-        const offset = this.cellLength*lineWidth*0.01;
+        const offset = this.cellLength*0.1;//*this.pixelRatio;
         x1 += (zi==0)? offset  : offset/2;
         x2 += (zi==0)?-offset/2:-offset;
         x3 += (zi==0)?-offset/2: offset/2;
@@ -189,6 +189,15 @@ class HexaCanvas extends Canvas{
         lines[2] = [x3, y3];
         lines[3] = [x1, y1];
         lines[4] = [x2, y2];
+
+        let region = new Path2D();
+        region.moveTo(...lines[0]);
+        region.lineTo(...lines[1]);
+        region.lineTo(...lines[2]);
+        region.lineTo(...lines[0]);
+        region.closePath();
+        this.ct.fill(region,"evenodd");
+
         this.lines(lines);
     }
     drawTri(xi, yi, zi, text = ""){
