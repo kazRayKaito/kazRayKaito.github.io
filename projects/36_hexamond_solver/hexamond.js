@@ -10,18 +10,27 @@ class Hexamond{
             this.defineParameters();
             if(this.solve()=="success") break;
         }
+        this.drawTiles();
     }
     //-----------------------------------[RedrawBoard/Functions]----------------------------------------
     redrawBoard(){
         //Draw to test
         this.canvas.fillAll("white");
         this.canvas.strokeColor("black");
-        this.canvas.lineWidth(1);
+        this.canvas.lineWidth(2*this.canvas.pixelRatio);
         this.canvas.drawRect();
 
         this.canvas.strokeColor("black");
-        this.canvas.lineWidth(2);
+        this.canvas.lineWidth(4*this.canvas.pixelRatio);
         this.canvas.drawFrame();
+    }
+    drawTiles(){
+        for(let i=0; i<this.tiles.length; i++){
+            if(this.tiles[i]>=0 && this.tiles[i]<12){
+                this.canvas.drawTriInner(...this.i2xyz(i), this.colors[this.tiles[i]]);
+                //this.canvas.drawTri(...this.i2xyz(i), ""+this.tiles[i]);
+            }
+        }
     }
     xyz2i(x,y,z){
         return x + y * 8 + z * 56;
@@ -93,18 +102,18 @@ class Hexamond{
             [[0,1,2,5,0,1],1,1]
         ];
         this.colors = [
-            "red",
-            "blue",
-            "cyan",
-            "saddleBrown",
-            "yellow",
-            "green",
-            "purple",
-            "goldenrod",
-            "gray",
+            "mediumslateblue",
+            "mediumpurple",
+            "salmon",
+            "deeppink",
+            "mediumorchid",
+            "hotpink",
+            "mediumvioletred",
+            "palevioletred",
+            "thistle",
             "magenta",
             "pink",
-            "lime"
+            "lightcoral"
         ]
         this.random = Math.random();
         this.randCount = 0;
@@ -252,7 +261,6 @@ class Hexamond{
             shapeFillXYZList[shapeFillXYZList.length] = this.i2xyz(index);
         });
         shapeFillXYZList.forEach(xyz=>{
-            this.canvas.drawTriInner(...xyz, this.colors[shapeCount]);
             this.tiles[this.xyz2i(...xyz)] = shapeIndex;
             this.shapes[shapeIndex][1] = 0;
         });

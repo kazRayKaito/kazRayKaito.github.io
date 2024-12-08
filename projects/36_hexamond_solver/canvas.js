@@ -162,7 +162,10 @@ class HexaCanvas extends Canvas{
     }
     drawTriInner(xi,yi,zi, color = "black"){
         this.strokeColor(color);
-        this.lineWidth(this.cellLength*0.1);//*this.pixelRatio);
+        //this.lineWidth(this.cellLength*0.1);//*this.pixelRatio);
+        //const offset = this.cellLength*0.1;//*this.pixelRatio;
+        this.lineWidth(this.cellLength*0.31);//*this.pixelRatio);
+        const offset = this.cellLength*0.3;//*this.pixelRatio;
 
         let x1 = xi;
         let y1 = yi;
@@ -175,7 +178,6 @@ class HexaCanvas extends Canvas{
         [x2,y2]=this.i2p(x2,y2);
         [x3,y3]=this.i2p(x3,y3);
 
-        const offset = this.cellLength*0.1;//*this.pixelRatio;
         x1 += (zi==0)? offset  : offset/2;
         x2 += (zi==0)?-offset/2:-offset;
         x3 += (zi==0)?-offset/2: offset/2;
@@ -196,7 +198,7 @@ class HexaCanvas extends Canvas{
         region.lineTo(...lines[2]);
         region.lineTo(...lines[0]);
         region.closePath();
-        this.ct.fill(region,"evenodd");
+        //this.ct.fill(region,"evenodd");
 
         this.lines(lines);
     }
@@ -213,7 +215,6 @@ class HexaCanvas extends Canvas{
         lines[1] = this.i2p(x2, y2);
         lines[2] = this.i2p(x3, y3);
         lines[3] = this.i2p(x1, y1);
-        this.lines(lines);
 
         if(text != ""){
             const x = (lines[0][0]+lines[1][0]+lines[2][0])/3;
@@ -236,6 +237,7 @@ class HexaCanvas extends Canvas{
         lines[10] = this.i2p(3,5);
         lines[11] = this.i2p(2,5);
         lines[12] = this.i2p(0,3);
+        lines[13] = this.i2p(0,0);
         this.lines(lines);
     }
     lines(xyList){
