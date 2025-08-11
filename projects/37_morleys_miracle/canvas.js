@@ -63,6 +63,8 @@ class Canvas{
         this.width  = Math.floor(this.widthStyle  * this.pixelRatio);
         this.height = Math.floor(this.heightStyle * this.pixelRatio);
         this.resize(this.width, this.height);
+
+        console.log("Here");
     }
     resize(width, height){
         this.canvas.width = Math.floor(width);
@@ -90,6 +92,20 @@ class Canvas{
     }
     textCenter(string="empty string", x=0, y=0, color="black", font="10px 'Times'", ta="center", tbl="middle"){
         this.text(string,x,y,color,font,"center","middle");
+    }
+    fillLines(points){
+        this.ct.beginPath();
+        const pointLength = points.length;
+        for(let i = 0; i < points.length; i++){
+            const iNext = (i+1)%pointLength;
+            if(i == 0){
+                this.ct.moveTo(points[i].x,points[i].y,points[iNext].x,points[iNext].y);
+            }else{
+                this.ct.lineTo(points[i].x,points[i].y,points[iNext].x,points[iNext].y);
+            }
+        }
+        this.ct.closePath();
+        this.ct.fill();
     }
     line(xi,yi,xf,yf){
         this.ct.beginPath();
@@ -141,8 +157,7 @@ class MorleysMiracle extends Canvas{
         //Canvas info
         super(canvas);
         window.addEventListener('resize', (event)=>{this.reresize(event);}, false);
-        super.flexResize(0.95, 0.95, 840, 840);
-        
+        super.flexResize(0.95, 0.95, 840, 320);
 
         //Points info
         this.points = [];
@@ -150,6 +165,9 @@ class MorleysMiracle extends Canvas{
         this.points[0] = new Point("P0", 0, 0);
         this.points[1] = new Point("P1", 0, 0);
         this.points[2] = new Point("P2", 0, 0);
+        this.middlePoints[0] = new Point("m0", 0, 0);
+        this.middlePoints[1] = new Point("m1", 0, 0);
+        this.middlePoints[2] = new Point("m2", 0, 0);
         this.points[0].reset(this.canvas);
         this.points[1].reset(this.canvas);
         this.points[2].reset(this.canvas);
@@ -163,22 +181,40 @@ class MorleysMiracle extends Canvas{
         this.draw();
     }
     reresize(){
-        super.flexResize(0.95, 0.95, 840, 840);
+        super.flexResize(0.95, 0.95, 840, 320);
         this.draw();
     }
     draw(){
-        this.fillAll("white");
-        this.strokeColor("black");
-        super.lines(this.points);
-        super.text(...this.points[0].returnLabelInfo());
-        super.text(...this.points[1].returnLabelInfo());
-        super.text(...this.points[2].returnLabelInfo());
-
+        //Calculate midpoints
         const midPoint_0 = this.points[0].getMidPoint(this.points[1],this.points[2]);
         const midPoint_1 = this.points[1].getMidPoint(this.points[2],this.points[0]);
         const midPoint_2 = this.points[2].getMidPoint(this.points[0],this.points[1]);
+        this.middlePoints[0].updateXY(midPoint_0);
+        this.middlePoints[1].updateXY(midPoint_1);
+        this.middlePoints[2].updateXY(midPoint_2);
 
-        this.strokeColor("red");
+        //Reset Canvas
+        this.fillAll("white");
+
+        //Fill Colors
+        this.fillColor("#7fff7f");
+        super.fillLines([this.points[0],midPoint_1,midPoint_2]);
+        super.fillLines([this.points[1],this.points[2],midPoint_0]);
+        this.fillColor("#7fffff");
+        super.fillLines([this.points[1],midPoint_0,midPoint_2]);
+        super.fillLines([this.points[0],this.points[2],midPoint_1]);
+        this.fillColor("#ffff7f");
+        super.fillLines([this.points[2],midPoint_0,midPoint_1]);
+        super.fillLines([this.points[0],this.points[1],midPoint_2]);
+        this.fillColor("lightgray");
+        super.fillLines([midPoint_0,midPoint_1,midPoint_2]);
+
+        //DrawTriangle
+        this.strokeColor("black");
+        this.lineWidth(this.pixelRatio*1);
+        super.lines(this.points);
+
+        //Draw trisecting lines
         this.line(this.points[0].x,this.points[0].y,midPoint_1.x, midPoint_1.y);
         this.line(this.points[0].x,this.points[0].y,midPoint_2.x, midPoint_2.y);
         this.line(this.points[1].x,this.points[1].y,midPoint_0.x, midPoint_0.y);
@@ -186,9 +222,18 @@ class MorleysMiracle extends Canvas{
         this.line(this.points[2].x,this.points[2].y,midPoint_0.x, midPoint_0.y);
         this.line(this.points[2].x,this.points[2].y,midPoint_1.x, midPoint_1.y);
 
+        //Draw Equilateral Triangle
         this.line(midPoint_0.x, midPoint_0.y,midPoint_1.x, midPoint_1.y);
         this.line(midPoint_1.x, midPoint_1.y,midPoint_2.x, midPoint_2.y);
         this.line(midPoint_2.x, midPoint_2.y,midPoint_0.x, midPoint_0.y);
+
+        //Label points
+        super.text(...this.points[0].returnLabelInfo(midPoint_0));
+        super.text(...this.points[1].returnLabelInfo(midPoint_1));
+        super.text(...this.points[2].returnLabelInfo(midPoint_2));
+        super.text(...this.middlePoints[0].returnLabelInfo(this.points[0]));
+        super.text(...this.middlePoints[1].returnLabelInfo(this.points[1]));
+        super.text(...this.middlePoints[2].returnLabelInfo(this.points[2]));
     }
     touch(event){
         if(this.touchStart) return;
@@ -238,15 +283,27 @@ class Point{
         this.x = x;
         this.y = y;
     }
+    updateXY(point){
+        this.x = point.x;
+        this.y = point.y;
+    }
     reset(canvas){
         this.x = Math.random()*canvas.width;
         this.y = Math.random()*canvas.height;
     }
-    getAngleToPoint(p2){
-        return Math.atan((this.y - p2.y)/(this.x - p2.x)) + (((this.x-p2.x)>0)?Math.PI:0) + Math.PI/2;
-    }
-    getAngle(p1, p2){
+    getAngleOfLine(p1, p2){
         return Math.atan((p1.y - p2.y)/(p1.x - p2.x)) + (((p1.x-p2.x)>0)?Math.PI:0) + Math.PI/2;
+    }
+    getAngleBtwLines(targetPoint, point1, point2){
+        const angleT_1_temp = this.getAngleOfLine(targetPoint, point1);
+        const angleT_2_temp = this.getAngleOfLine(targetPoint, point2);
+        const angleT_small = Math.min(angleT_1_temp, angleT_2_temp);
+        const angleT_large = Math.max(angleT_1_temp, angleT_2_temp);
+        let dAngleT = angleT_large - angleT_small;
+        if(dAngleT > Math.PI){
+            dAngleT = Math.PI * 2 - dAngleT;
+        }
+        return dAngleT;
     }
     getMidPoint(point1, point2){
         //Get self Point and distance between point1 and point2
@@ -255,29 +312,11 @@ class Point{
         const dy12 = point1.y - point2.y;
         const distP12 = Math.sqrt(dx12 * dx12 + dy12 * dy12);
 
-        //Get angle 1
-        const angle1_0_temp = this.getAngle(point1, selfPoint);
-        const angle1_2_temp = this.getAngle(point1, point2);
-        const angle1_small = Math.min(angle1_0_temp, angle1_2_temp);
-        const angle1_large = Math.max(angle1_0_temp, angle1_2_temp);
-        let dAngle1 = angle1_large - angle1_small;
-        const angle1_inverted = dAngle1 > Math.PI;
-        if(angle1_inverted){
-            dAngle1 = Math.PI * 2 - dAngle1;
-        }
-
-        //Get angle 2
-        const angle2_0_temp = this.getAngle(point2, selfPoint);
-        const angle2_1_temp = this.getAngle(point2, point1);
-        const angle2_small = Math.min(angle2_0_temp, angle2_1_temp);
-        const angle2_large = Math.max(angle2_0_temp, angle2_1_temp);
-        let dAngle2 = angle2_large - angle2_small;
-        let lineFromP2Angle = (angle2_small + dAngle2 / 3)%(Math.PI*2);
-        const angle2_inverted = dAngle2 > Math.PI;
-        if(angle2_inverted){
-            dAngle2 = Math.PI * 2 - dAngle2;
-            lineFromP2Angle = (angle2_small + Math.PI*2 - dAngle2 / 3)%(Math.PI*2);
-        }
+        //Get angle info
+        const angle1_2_temp = this.getAngleOfLine(point1, point2);
+        const angle1_0_temp = this.getAngleOfLine(point1, selfPoint);
+        const dAngle1 = this.getAngleBtwLines(point1, selfPoint, point2);
+        const dAngle2 = this.getAngleBtwLines(point2, selfPoint, point1);
         
         const L1 = distP12 * (Math.tan(Math.PI/2 - dAngle1/3)/(Math.tan(Math.PI/2 - dAngle2/3)+(Math.tan(Math.PI/2 - dAngle1/3))));
 
@@ -292,8 +331,19 @@ class Point{
         mp.y = point1.y + dy;
         return mp;
     }
-    returnLabelInfo(){
-        return [this.name, this.x, this.y, "black", "30px 'Times'", "left", "bottom"];
+    returnLabelInfo(midPoint){
+        //Declare target XY
+        let x = 0;
+        let y = 0;
+
+        //Get angle to midPoint
+        const length = 25;
+        const angle = this.getAngleOfLine(midPoint, {x:this.x, y:this.y});
+        x = this.x + length*Math.sin(angle);
+        y = this.y - length*Math.cos(angle);
+
+        //return [this.name, this.x, this.y, "black", "30px 'Times'", "left", "bottom"];
+        return [this.name, x, y, "black", "30px 'Times'", "center", "middle"];
     }
 }
 
