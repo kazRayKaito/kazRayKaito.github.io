@@ -26,6 +26,16 @@
 
 		<tr>
 			<td align="center">
+				<input type="button" value="Solve" onclick="solve()">
+				<select id="modeSelector">
+					<option value="1">Normal</option>
+					<option value="2">Quick Solve</option>
+				</select>
+			</td>
+		</tr>
+
+		<tr>
+			<td align="center">
 				<canvas id="Canvas"></canvas>
 			</td>
 		</tr>
@@ -37,6 +47,12 @@
 	<script type="text/javascript">
 		//Setup Elements
 		const hexamond = new Hexamond(document.getElementById('Canvas'));
+		const modeSelector = document.getElementById('modeSelector');
+
+		const solve = () =>{
+			const solveMode = modeSelector.value;
+			hexamond.startSolving(solveMode);
+		}
 	</script>
 
 </body>

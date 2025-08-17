@@ -8,7 +8,7 @@ function initJS(){
 	angleS.value = 0;
 	drateS.value = 70;
 
-	target = [[10,15,66],[10,29,54],[10,60,60],[10,90,71]];
+	target = [[15,15,66],[15,29,54],[15,60,60],[15,90,71]];
 
 	changeParameter();
 	autoSlideStart(1);

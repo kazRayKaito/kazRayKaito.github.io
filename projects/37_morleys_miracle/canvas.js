@@ -63,8 +63,6 @@ class Canvas{
         this.width  = Math.floor(this.widthStyle  * this.pixelRatio);
         this.height = Math.floor(this.heightStyle * this.pixelRatio);
         this.resize(this.width, this.height);
-
-        console.log("Here");
     }
     resize(width, height){
         this.canvas.width = Math.floor(width);
@@ -342,7 +340,6 @@ class Point{
         x = this.x + length*Math.sin(angle);
         y = this.y - length*Math.cos(angle);
 
-        //return [this.name, this.x, this.y, "black", "30px 'Times'", "left", "bottom"];
         return [this.name, x, y, "black", "30px 'Times'", "center", "middle"];
     }
 }

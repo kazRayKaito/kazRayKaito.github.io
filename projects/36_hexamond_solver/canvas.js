@@ -152,7 +152,7 @@ class Canvas{
 class HexaCanvas extends Canvas{
     constructor(canvas=document.createElement("canvas")){
         super(canvas);
-        super.flexResize(0.95, 0.7, 840, 320);
+        super.flexResize(0.95, 0.7, 520, 320);
         this.cellLength = Math.floor(this.canvas.width/8);
     }
     i2p(xi,yi){

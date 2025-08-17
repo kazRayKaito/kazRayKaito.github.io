@@ -2,15 +2,10 @@ class Hexamond{
     constructor(canvas){
         //Define Canvas
 		this.canvas = new HexaCanvas(canvas);
+        this.status = 0;//[0:ready for solving, 1:currently solving, 2:solving success]
+        this.shapeCount = 0;
+        this.resetTiles();
         this.redrawBoard();
-
-        //StartSolving
-        while(true){
-            this.resetTiles();
-            this.defineParameters();
-            if(this.solve()=="success") break;
-        }
-        this.drawTiles();
     }
     //-----------------------------------[RedrawBoard/Functions]----------------------------------------
     redrawBoard(){
@@ -23,6 +18,12 @@ class Hexamond{
         this.canvas.strokeColor("black");
         this.canvas.lineWidth(4*this.canvas.pixelRatio);
         this.canvas.drawFrame();
+
+        for(let i=0; i<this.tiles.length; i++){
+            if(this.tiles[i]==-1){
+                this.canvas.drawTriInner(...this.i2xyz(i), "white");
+            }
+        }
     }
     drawTiles(){
         for(let i=0; i<this.tiles.length; i++){
@@ -115,12 +116,34 @@ class Hexamond{
             "pink",
             "lightcoral"
         ]
-        this.random = Math.random();
-        this.randCount = 0;
     }
     //-----------------------------------[SolvePuzzle]----------------------------------------
+    startSolving(solveMode){
+        //Check if currently ready to solve
+        if(this.status != 0){
+            alert("Currently Solving. Please try again after it's done.");
+            return;
+        }
+
+        if(solveMode == "1"){
+            this.step();
+        }else if(solveMode == "2"){
+            this.resetTiles();
+            this.redrawBoard();
+            setTimeout(() => {
+                this.solve()
+            },50);
+        }
+        
+    }
     solve(){
-        //for(let shapeCount = 0; shapeCount < this.shapes.length; shapeCount++){
+        while(this.solveTry()!="success");
+    }
+    solveTry(){
+        //Initialize
+        this.resetTiles();
+        this.defineParameters();
+
         for(let shapeCount = 0; shapeCount <this.shapes.length; shapeCount++){
             const edgeIndexToPlaceNextShape = this.findEdgeToPlace();//[Index]
             const shapePlaceArg = this.findShapeToPlace(edgeIndexToPlaceNextShape)[0];//[shapeIndex, mapXYZ, shapeStartPoint, rotation, mirror]¥
@@ -130,7 +153,39 @@ class Hexamond{
                 this.placeShape(shapePlaceArg, shapeCount);
             }
         }
+        this.drawTiles();
         return "success";
+    }
+    step(){
+        if(this.status==0){
+            //Initialize
+            this.resetTiles();
+            this.defineParameters();
+
+            //Reset variables
+            this.shapeCount = 0;
+            this.status = 1;
+
+            //Draw
+            this.redrawBoard();
+        }else{
+            const edgeIndexToPlaceNextShape = this.findEdgeToPlace();//[Index]
+            const shapePlaceArg = this.findShapeToPlace(edgeIndexToPlaceNextShape)[0];//[shapeIndex, mapXYZ, shapeStartPoint, rotation, mirror]¥
+            if(shapePlaceArg=="fail"){
+                this.status = 0;
+            }else{
+                this.placeShape(shapePlaceArg, this.shapeCount);
+            }
+            this.shapeCount++;
+            
+            //Draw
+            this.drawTiles();
+
+            if(this.shapeCount > this.shapes.length){
+                    return;
+            }
+        }
+        requestAnimationFrame(() => {this.step()});
     }
     findEdgeToPlace(){
         //Count dead neighbors. Higher the count higher the priority

@@ -12,10 +12,10 @@
 
 <body id="Body" onload="init()" class="untouchable">
 
-	<table class="main" id="Table">
+	<table class="main" id="Table" align="center" border="0">
 	
 		<tr>
-			<td align="center">
+			<td align="center" colspan="3">
 				<Font size="10" Font color="black"><TNR>
 			       Fractal Tree
 				</Font></TNR>
@@ -24,7 +24,7 @@
 		</tr>
 	
 		<tr>
-			<td align="center">
+			<td align="center" colspan="3">
 				<input type="button" width="20%" value="Preset 1" onclick="autoSlideStart(1)">
 				<input type="button" width="20%" value="Preset 2" onclick="autoSlideStart(2)">
 				<input type="button" width="20%" value="Preset 3" onclick="autoSlideStart(3)">
@@ -33,24 +33,29 @@
 		</tr>
 
 		<tr>
-			<td align="right" onchange="changeParameter()" oninput="changeParameter()">
+
+			<td style="width: 20%;"></td>
+
+			<td style="width: 60%;" align="right" onchange="changeParameter()" oninput="changeParameter()">
 				<div>
-					Repetition:<input class="slider" type="range" min="1" max="15" id="branch">
+					Repetition:<input class="slider" type="range" min="1" max="15" id="branch" style="width: 50%;">
 				</div>
 
 				<div>
-					Split Angle:<input class="slider" type="range" min="0" max="90" id="angle">
+					Split Angle:<input class="slider" type="range" min="0" max="90" id="angle" style="width: 50%;">
 				</div>
 
 				<div>
-					Length Scaling:<input class="slider" type="range" min="50" max="100" id="drate">
+					Length Scaling:<input class="slider" type="range" min="50" max="100" id="drate" style="width: 50%;">
 				</div>
 
-			</td>
+			</td style="width: 20%;">
+
+			<td></td>
 		</tr>
 
 		<tr>
-			<td align="center">
+			<td align="center" colspan="3">
 				<canvas id="Canvas" width="400" height="400" class="untouchable"></canvas>
 			</td>
 		</tr>
